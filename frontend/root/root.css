@@ -1,0 +1,431 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 親要素を縦並びのレイアウトにする */
+#example1 {
+  display: flex;
+  margin-top: 12px;    /* ヘッダーの高さ分 */
+  margin-bottom: 150px; /* フッターの高さ分（addcontainer + footer-nav） */
+  flex-direction: column; /* 子要素を縦に並べる */
+  gap: 0;              /* 要素間の隙間を10pxに設定 */
+  padding: 2px;          /* 必要に応じて全体の余白を追加 */
+}
+
+
+
+.container {
+  display: grid;
+  /* 2列 × 2行のグリッドを作成 */
+  grid-template-columns: 40px 1fr 60px; /* 左列と右列の幅を等しく設定 */
+  grid-template-rows: 50px minmax(50px, auto);   /* 行の高さは中身に合わせる */
+  
+  /* レイアウトの形を視覚的に定義 */
+  grid-template-areas:
+    "area-n area-a area-m"
+    "area-0 area-b area-c";
+  
+  gap: 0; /* 内部の隙間は各itemのpaddingで調整 */
+  background: white;
+  margin-bottom: 0;
+}
+
+/* 各子要素をエリア名に紐付け */
+.element-0 { grid-area: area-0; display: flex; align-items: center; justify-content: center; }
+.element-a { grid-area: area-a; padding: 10px 10px 5px 10px; }
+.element-b { grid-area: area-b; padding: 5px 10px 10px 10px; }
+.element-c { grid-area: area-c; background: #fafafa; }
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #9f9f9f;
+  border-top: none;           /* 上の線を消す */
+  border-bottom: none;        /* 下の線を消す */
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+/* ホバー時のちょっとした演出 */
+.toggle-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* 「車」の時の色を変えたい場合などのクラス */
+.toggle-btn.is-car {
+  border-color: #ff9900;
+  color: #ff9900;
+}
+
+.element-a{
+    padding: 10px 0; /* 下に余白を追加 */
+
+}
+
+.element-0 {
+    grid-area: area-0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* --- 以下を追加 --- */
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* 数字を囲む「円」のデザイン */
+.element-0::before {
+    content: "";
+    position: absolute;
+    width: 28px;        /* 円のサイズ */
+    height: 28px;
+    border: 1.5px solid #333; /* 丸の線の太さと色 */
+    border-radius: 50%; /* 正円にする */
+    z-index: -1;        /* 数字の背面に配置 */
+}
+
+/* item全体に対して相対位置の基準を作る */
+.item.element-0 {
+    position: relative;
+    z-index: 1;
+}
+
+/* 要素B自体の配置調整 */
+.element-b {
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* 縦並びにする */
+  align-items: center;
+  justify-content: center;
+  border: #000000 solid 1px;
+  border-radius: 10px;
+  /* --- 長い文字列への対応 --- */
+  word-break: break-all;     /* 枠の端で強制的に改行する */
+  overflow-wrap: break-word; /* 長い単語でも途中で折る */
+  line-height: 1.4;          /* 行間を少し広げて読みやすく */
+  min-width: 0;              /* Flexbox内での幅の計算を安定させる */
+  /* 重要：高さを固定せず、グリッドセルいっぱいに広がるようにする */
+  height: auto; 
+  align-self: stretch; /* セルの高さに合わせる */
+}
+
+/* 上段：地名 */
+.location-name {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 1.2;
+    word-break: break-all;
+    text-align: center;
+}
+
+/* 下段：住所 */
+.location-address {
+    font-size: 11px;       /* 住所は少し小さく */
+    color: #666;           /* 少し薄い色にして対比をつける */
+    margin-top: 2px;
+    word-break: break-all;
+    text-align: center;
+}
+
+
+
+/* 要素Cのスタイル調整 */
+.element-c {
+  position: relative; /* 子要素の絶対配置を使う場合に便利 */
+  display: flex;
+  align-items: center;    /* 上下中央 */
+  gap: 5px;
+  justify-content: center; /* 左右中央（右寄せなら flex-end） */
+}
+
+/* ハンバーガーボタン本体 */
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;  /* 押しやすいサイズ */
+  aspect-ratio: 1; /* 正方形にする */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 8px;
+}
+
+/* 三本線のスタイル */
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s; /* アニメーション用 */
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: auto;
+  line-height: 1;
+}
+
+/* リスト全体の高さを持たせる（スクロール確認用） */
+.list-group {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+
+
+.addcontainer {
+  position: static;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;           /* 要素間の隙間 */
+  padding: 15px;
+  background-color: #ffffff;
+  box-shadow: none; /* フッター全体に影があるので個別の影は消してOK */
+  border-top: none;
+  z-index: 100;        /* ドラッグ中の要素より上に表示 */
+}
+
+/* ＋ボタン */
+.add-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #007bff;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;      /* 潰れないように固定 */
+}
+
+/* 検索バー */
+.search-bar {
+  flex-grow: 1;        /* 余ったスペースをすべて使う */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* 確定ボタン */
+.confirm-btn {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap; /* 改行させない */
+}
+
+.confirm-btn:hover { background-color: #218838; }
+.add-btn:hover { background-color: #0069d9; }
+
+
+
+/* =========================================
+   2. レイアウト（大きな枠組み）
+   ========================================= */
+
+/* --- レイアウト：ヘッダーの固定と内側の余白 --- */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+.header-inner {
+    display: flex;
+    align-items: center; /* 上下中央揃え */
+    padding: 10px 15px;  /* 上下左右の余白 */
+    height: 60px;        /* ヘッダーの高さを固定（任意） */
+}
+
+   /* --- レイアウト（既存の #footer を修正・追記） --- */
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    padding: 0;
+    /* 上下に並べる設定 */
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* 上段と下段の間のスキマ */
+}
+/* =========================================
+   3. パーツのデザイン（検索バーなど）
+   ========================================= */
+/* --- フッター内のボタン配置用コンテナ --- */
+.footer-nav {
+    display: flex;           /* 横並びにする */
+    justify-content: center; /* 中央寄せ（端に寄せたい場合は space-between など） */
+    gap: 15px;               /* ボタン同士の間隔 */
+    padding: 0 15px 15px 15px;         /* 左右の余白 */
+    background-color: white;
+    z-index: 100;
+}
+
+/* --- ボタン単体のデザイン（楕円形） --- */
+.pill-btn {
+    flex: 1;                 /* 2つのボタンを同じ幅で広げる（不要なら消してOK） */
+    max-width: 150px;        /* 広がりすぎないように制限 */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;     /* 楕円形にするために大きな値を指定 */
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;         /* マウスを乗せると指マークになる */
+    transition: background-color 0.2s;
+}
+
+/* --- ボタンの状態（ホップ・クリック感） --- */
+.pill-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.pill-btn:active {
+    background-color: #d0d0d0; /* クリックした瞬間に少し暗くする */
+}
+
+/* ---　header　---*/
+/* --- パーツ：丸いボタンのデザイン --- */
+.round-back-btn {
+    width: 40px;          /* 幅と高さを同じにして正円に */
+    height: 40px;
+    border-radius: 50%;   /* 50%で正円 */
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;        /* 中の「＜」を中央に置くため */
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    outline: none;        /* クリック時の枠線を消す */
+}
+
+/* --- [追加] マウスを乗せたとき（PC用） --- */
+.round-back-btn:hover {
+    background-color: #e0e0e0; /* 少し暗くする */
+}
+
+/* --- [追加] クリックした瞬間（重要！） --- */
+.round-back-btn:active {
+    background-color: #d0d0d0; /* さらに暗くして「押し込まれた」感を出す */
+    transform: scale(0.95);    /* ほんの少しだけ小さくして、物理的な動きを表現 */
+}
+
+/* 「＜」マーク（CSSで描画） */
+.chevron {
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #333;  /* 線の太さと色 */
+    border-left: 2px solid #333;
+    transform: rotate(-45deg);   /* 45度回転させて「＜」に */
+    margin-left: 4px;            /* 見た目上の中央調整 */
+    display: block;
+}
+
+
+
+/* 地図パネルの基本設定 */
+.map-panel {
+    position: absolute;
+    bottom: 100%; /* addcontainerの上に配置 */
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: 2px solid #007bff;
+    padding: 15px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    
+    /* スライドのアニメーション設定 */
+    transform: translateY(100%); /* 最初は隠す */
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
+    pointer-events: none; /* 隠れている時は操作不能に */
+    z-index: -1;
+}
+
+/* 確定時に付与するクラス */
+.map-panel.is-visible {
+    transform: translateY(0); /* 出てくる */
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: #eee;
+    overflow: hidden;
+    cursor: crosshair; /* 十字カーソルで「選択できる」感を出す */
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.map-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* クリックした場所に表示されるピン */
+.map-marker {
+    position: absolute;
+    font-size: 24px;
+    transform: translate(-50%, -100%); /* 先端を合わせる */
+    display: none; /* 最初は隠す */
+    pointer-events: none; /* ピン自体はクリックの邪魔をしない */
+}
+
+/* パネル内要素のデザイン */
+.map-placeholder img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.address-bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.panel-header {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: bold;
+}

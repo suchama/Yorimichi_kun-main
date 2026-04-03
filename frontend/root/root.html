@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="ja">
+  <title>SortableJS Demo</title>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <link rel="stylesheet" href="root.css">
+</head>
+<body>
+<div id = "header">
+    <div class="header-inner">
+        <button class="round-back-btn">
+            <span class="chevron"></span>
+        </button>
+    </div>
+</div>
+
+
+
+
+<main>
+  <div id="example1" class="list-group">
+
+
+  </div>
+</main>
+<div id="footer">
+    <div id="map-panel" class="map-panel">
+        <div class="panel-header">地図をタップして場所を指定</div>
+        <div class="map-container" id="map-click-area">
+            <img src="https://via.placeholder.com/600x300/e0e0e0/333?text=Touch+to+Select+Location" alt="Map" id="map-img">
+            <div id="map-marker" class="map-marker">📍</div>
+        </div>
+        <input type="text" id="address-input" class="address-bar" placeholder="タップで住所がここに自動入力されます..." readonly>
+    </div>
+    <div class="addcontainer">
+      <button type="button" class="add-btn">＋</button>
+      <input type="text" id="search-input" class="search-bar" placeholder="地名を検索...">
+      <button type="button" id="confirm-btn" class="confirm-btn">地名確定</button>
+    </div>
+
+    <div class="footer-nav">
+        <button class="pill-btn">順不同</button>
+        <button class="pill-btn highlight">完了</button>
+    </div>
+</div>
+
+    <script src="root.js"></script>
+</body>
+</html>
